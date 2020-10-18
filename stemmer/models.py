@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.indexes import Index
+
 
 # Create your models here.
 

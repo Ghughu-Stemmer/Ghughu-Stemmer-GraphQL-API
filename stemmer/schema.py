@@ -12,7 +12,7 @@ class WordRecordType(DjangoObjectType):
 class Query(graphene.ObjectType):
     allWordRecords = graphene.List(WordRecordType)
 
-    def resolve_allWordRecords(self, info, **kwargs):
+    def resolve_allWordRecords(self, _info, **kwargs):
         return WordRecord.objects.all()
 
 
@@ -30,7 +30,8 @@ class CreateWordRecord(graphene.Mutation):
         isAmbiguous = graphene.Boolean()
         comment = graphene.String()
 
-    def mutate(self, info, inflectionalWord, isVerb=None, isLastWord=False, prefix=None, suffix=None, stemWord=None, targetStemWord=None, isAmbiguous=False, comment=None):
+    def mutate(self, info, inflectionalWord, isVerb=None, isLastWord=False, prefix=None, suffix=None, stemWord=None,
+               targetStemWord=None, isAmbiguous=False, comment=None):
         user = info.context.user
         print(user)
 
