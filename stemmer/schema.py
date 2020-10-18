@@ -10,9 +10,9 @@ class WordRecordType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    wordRecords = graphene.List(WordRecordType)
+    allWordRecords = graphene.List(WordRecordType)
 
-    def resolve_wordRecords(self, info, **kwargs):
+    def resolve_allWordRecords(self, info, **kwargs):
         return WordRecord.objects.all()
 
 
