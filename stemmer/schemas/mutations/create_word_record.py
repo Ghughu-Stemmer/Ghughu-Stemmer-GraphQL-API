@@ -18,21 +18,17 @@ class CreateWordRecord(graphene.Mutation):
         isAmbiguous = graphene.Boolean()
         comment = graphene.String()
 
-    def mutate(self, info, inflectionalWord, isVerb=None, isLastWord=False, prefix=None, suffix=None, stemWord=None,
-               targetStemWord=None, isAmbiguous=False, comment=None):
-        user = info.context.user
-        print(user)
+    def mutate(self,
+               _info,
+               **kwargs
+               ):
+        if "inflectionalWord" not in kwargs:
+            raise Exception("Inflectional word must be provided")
+
+        inflectionalWord = kwargs["inflectionalWord"]
 
         wordRecord = WordRecord(
-            inflectionalWord=inflectionalWord,
-            isVerb=isVerb,
-            isLastWord=isLastWord,
-            prefix=prefix,
-            suffix=suffix,
-            stemWord=stemWord,
-            targetStemWord=targetStemWord,
-            isAmbiguous=isAmbiguous,
-            comment=comment
+            **kwargs
         )
 
         duplicateWordRecord = WordRecord.objects.filter(
@@ -40,7 +36,7 @@ class CreateWordRecord(graphene.Mutation):
         )
 
         if duplicateWordRecord.count() > 0:
-            raise Exception("Duplicate Word Found!!!")
+            raise Exception(f"Duplicate word found for {inflectionalWord}!!!")
         else:
             wordRecord.save()
 
