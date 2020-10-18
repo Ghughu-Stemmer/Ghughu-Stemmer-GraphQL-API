@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'stemmer'
+    'graphql_playground',
+    'stemmer',
 ]
 
 MIDDLEWARE = [
@@ -132,5 +133,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 GRAPHENE = {
-    'SCHEMA': 'ghughu.schema.schema',
+    'SCHEMA': 'GhughuServer.schema.schema',
 }
