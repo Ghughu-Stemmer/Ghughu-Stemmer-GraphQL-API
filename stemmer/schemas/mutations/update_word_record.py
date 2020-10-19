@@ -29,14 +29,18 @@ class UpdateWordRecord(graphene.Mutation):
     @classmethod
     def mutate(cls, _root, _info, **kwargs):
         id_ = kwargs['id']
-
         inflectionalWord = kwargs["inflectionalWord"]
-        conflictingDuplicateCount = WordRecord.objects.filter(inflectionalWord=inflectionalWord).exclude(id=id_).count()
 
+        matchingWordRecords = WordRecord.objects.filter(id=id_)
+
+        if matchingWordRecords.count() == 0:
+            raise Exception(f"No record found for id {id_}")
+
+        conflictingDuplicateCount = WordRecord.objects.filter(inflectionalWord=inflectionalWord).exclude(id=id_).count()
         if conflictingDuplicateCount > 0:
             raise Exception("There is another record in the database with same inflectional word but different ID")
         else:
-            WordRecord.objects.filter(id=id_).update(
+            matchingWordRecords.update(
                 **kwargs
             )
 
