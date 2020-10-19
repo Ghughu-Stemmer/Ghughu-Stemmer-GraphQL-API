@@ -5,8 +5,8 @@ This is a GraphQL API that handles data collection, accuracy testing and client 
 **Query and Mutations Example**
 
 ```graphql
-#View All Words
-query {
+# View All Words
+query showAllWords{
   allWordRecords {
     id
     inflectionalWord
@@ -16,9 +16,9 @@ query {
   }
 }
 
-#Create New Word Record
-mutation {
-  addWord: createWordRecord(
+# Create New Word Record
+mutation addWord{
+  createWordRecord(
     inflectionalWord: "নিয়ে"
     isLastWord: false
     isVerb: true
@@ -38,9 +38,9 @@ mutation {
   }
 }
 
-#Create A Bunch of Word Records
-mutation {
-  addWords: createWordRecordBatch(
+# Create A Bunch of Word Records
+mutation addManyWords{
+  createWordRecordBatch(
     records: "[{\"inflectionalWord\": \"দিয়েছি\", \"isLastWord\": false, \"isVerb\": true,\"stemWord\": \"দেওয়া\",\"targetStemWord\": \"দেওয়া\",\"isAmbiguous\": false }, {\"inflectionalWord\": \"দিচ্ছি\",\"isLastWord\": false,\"isVerb\": true,\"stemWord\": \"দেওয়া\",\"targetStemWord\": \"দেওয়া\",\"isAmbiguous\": false}]"
   ) {
     id
@@ -56,10 +56,10 @@ mutation {
   }
 }
 
-#Update Word Record
-mutation {
-  updateWord: updateWordRecord(
-    id: 15
+# Update Word Record
+mutation updateWordRecord {
+  updateWordRecord(
+    id: 20
     inflectionalWord: "নিয়া"
     isLastWord: false
     # isVerb: true
@@ -79,4 +79,17 @@ mutation {
   }
 }
 
+# Delete Word Record
+mutation deleteWord {
+  deleteWordRecord(id:31) {
+    rowsDeleted
+  }
+}
+
+# Delete Multiple Word Records
+mutation deleteWords {
+  deleteWordRecordBatch(ids:[32, 33]) {
+    rowsDeleted
+  }
+}
 ```
