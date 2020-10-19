@@ -26,7 +26,8 @@ class CreateWordRecordBatch(graphene.Mutation):
     class Arguments:
         records = graphene.String()
 
-    def mutate(self, info, records):
+    @classmethod
+    def mutate(cls, _root, _info, records):
         wordRecords = [WordRecord(
             inflectionalWord=word.get("inflectionalWord", None),
             isVerb=word.get("isVerb", None),
@@ -39,8 +40,10 @@ class CreateWordRecordBatch(graphene.Mutation):
             comment=word.get("comment", None)
         ) for word in json.loads(records)]
 
-        wordRecords = removeDuplicateRecords(wordRecords)
+        wordRecords = list(removeDuplicateRecords(wordRecords))
+        print(wordRecords)
 
         WordRecord.objects.bulk_create(wordRecords)
+        print(wordRecords)
 
-        return findDuplicateRecords(wordRecords)
+        return list(findDuplicateRecords(wordRecords))

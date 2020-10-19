@@ -26,10 +26,8 @@ class UpdateWordRecord(graphene.Mutation):
         isAmbiguous = graphene.Boolean()
         comment = graphene.String()
 
-    def mutate(self,
-               _info,
-               **kwargs
-               ):
+    @classmethod
+    def mutate(cls, _root, _info, **kwargs):
         id_ = kwargs['id']
 
         inflectionalWord = kwargs["inflectionalWord"]

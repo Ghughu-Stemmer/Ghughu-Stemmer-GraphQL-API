@@ -18,10 +18,8 @@ class CreateWordRecord(graphene.Mutation):
         isAmbiguous = graphene.Boolean()
         comment = graphene.String()
 
-    def mutate(self,
-               _info,
-               **kwargs
-               ):
+    @classmethod
+    def mutate(cls, _root, _info, **kwargs):
         if "inflectionalWord" not in kwargs:
             raise Exception("Inflectional word must be provided")
 
