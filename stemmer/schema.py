@@ -2,10 +2,10 @@ import graphene
 
 from .schemas.mutations import CreateWordRecord, CreateWordRecordBatch, UpdateWordRecord, DeleteWordRecord, \
     DeleteWordRecordBatch
-from .schemas.queries import AllWordRecords
+from .schemas.queries import AllWordRecords, WordRecordById
 
 
-class Query(AllWordRecords, graphene.ObjectType):
+class Query(AllWordRecords, WordRecordById, graphene.ObjectType):
     pass
 
 
