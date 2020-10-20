@@ -57,7 +57,7 @@ mutation addManyWords{
 }
 
 # Update Word Record
-mutation updateWordRecord {
+mutation updateWord {
   updateWordRecord(
     id: 20
     inflectionalWord: "নিয়া"
