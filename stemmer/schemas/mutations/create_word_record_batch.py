@@ -2,6 +2,7 @@ import json
 
 import graphene
 
+from stemmer import ghughu
 from stemmer.models import WordRecord
 from stemmer.schemas.types import WordRecordType
 
@@ -41,7 +42,10 @@ class CreateWordRecordBatch(graphene.Mutation):
         ) for word in json.loads(records)]
 
         wordRecords = list(removeDuplicateRecords(wordRecords))
-        print(wordRecords)
+
+        for record in wordRecords:
+            if record.isVerb:
+                record.stemWord = ghughu.stem(record.inflectionalWord)
 
         WordRecord.objects.bulk_create(wordRecords)
         print(wordRecords)

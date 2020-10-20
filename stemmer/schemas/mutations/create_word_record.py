@@ -1,5 +1,6 @@
 import graphene
 
+from stemmer import ghughu
 from stemmer.models import WordRecord
 from stemmer.schemas.types import WordRecordType
 
@@ -28,6 +29,9 @@ class CreateWordRecord(graphene.Mutation):
         wordRecord = WordRecord(
             **kwargs
         )
+
+        if wordRecord.isVerb:
+            wordRecord.stemWord = ghughu.stem(wordRecord.inflectionalWord)
 
         duplicateWordRecord = WordRecord.objects.filter(
             inflectionalWord=inflectionalWord

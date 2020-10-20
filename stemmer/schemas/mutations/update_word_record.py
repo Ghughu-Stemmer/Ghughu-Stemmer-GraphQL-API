@@ -1,5 +1,6 @@
 import graphene
 
+from stemmer import ghughu
 from stemmer.models import WordRecord
 from stemmer.schemas.types import WordRecordType
 
@@ -39,9 +40,15 @@ class UpdateWordRecord(graphene.Mutation):
         conflictingDuplicateCount = WordRecord.objects.filter(inflectionalWord=inflectionalWord).exclude(id=id_).count()
         if conflictingDuplicateCount > 0:
             raise Exception("There is another record in the database with same inflectional word but different ID")
-        else:
-            matchingWordRecords.update(
-                **kwargs
-            )
 
-        return WordRecord.objects.get(id=id_)
+        matchingWordRecords.update(
+            **kwargs
+        )
+
+        wordRecord = WordRecord.objects.get(id=id_)
+
+        if wordRecord.isVerb:
+            wordRecord.stemWord = ghughu.stem(wordRecord.inflectionalWord)
+            wordRecord.save()
+
+        return wordRecord
