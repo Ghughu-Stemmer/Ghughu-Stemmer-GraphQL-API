@@ -1,6 +1,7 @@
 import json
 
 import graphene
+import cytoolz
 
 from stemmer import ghughu
 from stemmer.models import WordRecord
@@ -51,6 +52,11 @@ class CreateWordRecordBatch(graphene.Mutation):
         ) for word in json.loads(records)]
 
         wordRecords = list(removeDuplicateRecords(wordRecords))
+
+        wordRecords = cytoolz.unique(
+            wordRecords,
+            key=lambda wordRecord: wordRecord.inflectionalWord
+        )
 
         for record in wordRecords:
             if record.isVerb:
