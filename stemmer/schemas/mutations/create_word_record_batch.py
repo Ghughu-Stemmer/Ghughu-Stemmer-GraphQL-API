@@ -15,8 +15,15 @@ def findDuplicateRecords(wordRecords):
 
 
 def removeDuplicateRecords(wordRecords):
-    duplicateWords = [record.inflectionalWord for record in findDuplicateRecords(wordRecords)]
-    wordRecords = filter(lambda record: record.inflectionalWord not in duplicateWords, wordRecords)
+    duplicateWords = [
+        record.inflectionalWord
+        for record in findDuplicateRecords(wordRecords)
+    ]
+
+    wordRecords = filter(
+        lambda record: record.inflectionalWord not in duplicateWords,
+        wordRecords
+    )
 
     return wordRecords
 
@@ -29,15 +36,17 @@ class CreateWordRecordBatch(graphene.Mutation):
 
     @classmethod
     def mutate(cls, _root, _info, records):
+        print(records)
+
         wordRecords = [WordRecord(
-            inflectionalWord=word.get("inflectionalWord", None),
-            isVerb=word.get("isVerb", None),
-            isLastWord=word.get("isLastWord", None),
+            inflectionalWord=word.get("word", None),
+            isVerb=word.get("is-verb", None),
+            isLastWord=word.get("last-word", None),
             prefix=word.get("prefix", None),
             suffix=word.get("suffix", None),
-            stemWord=word.get("stemWord", None),
-            targetStemWord=word.get("targetStemWord", None),
-            isAmbiguous=word.get("isAmbiguous", False),
+            stemWord=word.get("stem-word", None),
+            targetStemWord=word.get("target-stem-word", None),
+            isAmbiguous=word.get("is-ambiguous", False),
             comment=word.get("comment", None)
         ) for word in json.loads(records)]
 
