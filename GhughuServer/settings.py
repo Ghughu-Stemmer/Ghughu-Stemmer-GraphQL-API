@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'GhughuServer.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'mongo': {
         'ENGINE': 'djongo',
         'NAME': os.getenv('MONGO_DB_NAME', 'ghughu'),
         'CLIENT': {
@@ -88,7 +88,7 @@ DATABASES = {
             'password': os.getenv('MONGO_DB_PASSWORD')
         }
     },
-    'sqlite3': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
