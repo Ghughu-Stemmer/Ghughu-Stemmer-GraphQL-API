@@ -37,32 +37,32 @@ class CreateWordRecordBatch(graphene.Mutation):
 
     @classmethod
     def mutate(cls, _root, _info, records):
-        print(records)
-
         wordRecords = [WordRecord(
-            inflectionalWord=word.get("word", None),
-            isVerb=word.get("is-verb", None),
-            isLastWord=word.get("last-word", None),
+            inflectionalWord=word.get(
+                "word", word.get('inflectionalWord', None)),
+            isVerb=word.get("is-verb", word.get('isVerb', None)),
+            isLastWord=word.get("last-word", word.get('islastWord', False)),
             prefix=word.get("prefix", None),
             suffix=word.get("suffix", None),
-            stemWord=word.get("stem-word", None),
-            targetStemWord=word.get("target-stem-word", None),
-            isAmbiguous=word.get("is-ambiguous", False),
+            stemWord=word.get("stem-word", word.get('stemWord', None)),
+            targetStemWord=word.get(
+                "target-stem-word", word.get('targetStemWord', None)),
+            isAmbiguous=word.get(
+                "is-ambiguous", word.get('isAmbiguous', False)),
             comment=word.get("comment", None)
         ) for word in json.loads(records)]
 
         wordRecords = list(removeDuplicateRecords(wordRecords))
 
-        wordRecords = cytoolz.unique(
+        wordRecords = list(cytoolz.unique(
             wordRecords,
             key=lambda wordRecord: wordRecord.inflectionalWord
-        )
+        ))
 
         for record in wordRecords:
             if record.isVerb:
                 record.stemWord = ghughu.stem(record.inflectionalWord)
 
         WordRecord.objects.bulk_create(wordRecords)
-        print(wordRecords)
 
         return list(findDuplicateRecords(wordRecords))
