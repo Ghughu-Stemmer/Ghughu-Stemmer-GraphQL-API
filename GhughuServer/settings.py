@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'GhughuServer.wsgi.application'
 DATABASES = {
     'mongo': {
         'ENGINE': 'djongo',
-        'NAME': os.getenv('MONGO_DB_NAME', 'ghughu'),
+        'NAME': os.getenv('MONGO_DB_COLLECTION_NAME', 'ghughu'),
         'CLIENT': {
             'host': os.getenv('MONGO_DB_CONNECTION_URL', 'localhost'),
             'port': int(os.getenv('MONGO_DB_PORT', 27017)),

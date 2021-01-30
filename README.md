@@ -70,7 +70,7 @@ pip install -r requirements.txt
 Setup the following environment Variables. They are quite self explanatory and you should have these info after you setup a mongodb cluster:
 
 - MONGO_DB_CONNECTION_URL
-- MONGO_DB_NAME (collection name)
+- MONGO_DB_COLLECTION_NAME
 - MONGO_DB_PORT
 - MONGO_DB_USER
 - MONGO_DB_PASSWORD
