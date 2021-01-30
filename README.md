@@ -77,7 +77,9 @@ Setup the following environment Variables. They are quite self explanatory and y
 
 ### 5. Run the server
 
+```bash
 python manage.py runserver
+```
 
 ## Query and Mutations Example
 
