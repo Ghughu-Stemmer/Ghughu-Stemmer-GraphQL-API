@@ -7,5 +7,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8000/tcp
 EXPOSE 8000/udp
 
-ENTRYPOINT [ "./start-server.sh"]
-
+ENTRYPOINT [ "./docker-entrypoint.sh"]

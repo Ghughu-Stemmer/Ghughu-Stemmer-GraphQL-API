@@ -88,7 +88,7 @@ DATABASES = {
             'password': os.getenv('MONGO_DB_PASSWORD')
         }
     },
-    'default': {
+    'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -133,3 +133,5 @@ STATIC_URL = '/static/'
 GRAPHENE = {
     'SCHEMA': 'GhughuServer.schema.schema',
 }
+
+DATABASES['default'] = DATABASES['sqlite3']

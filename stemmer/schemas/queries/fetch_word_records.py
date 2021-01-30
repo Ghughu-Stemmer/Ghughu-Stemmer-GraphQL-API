@@ -13,7 +13,6 @@ class FetchWordRecords(graphene.ObjectType):
 
     def resolve_wordRecords(self, _info, **kwargs):
         skip = kwargs.get('skip', 0)
-        print(skip)
 
         result = None
         if 'take' in kwargs.keys():
